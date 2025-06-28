@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -52,16 +53,340 @@
     }
     </script>
 
+    <meta charset="UTF-8">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
+        /* Basic Reset & Font */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Light gray background */
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
         }
-        /* Custom scrollbar for better aesthetics */
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        /* App Container */
+        #app-container {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 32px;
+            width: 100%;
+            max-width: 960px;
+            border: 1px solid #e5e7eb;
+            box-sizing: border-box;
+            margin: 20px; /* Add margin for smaller screens */
+        }
+
+        /* Header */
+        h1 {
+            font-size: 36px;
+            font-weight: 800;
+            text-align: center;
+            color: #1e40af;
+            margin-bottom: 32px;
+            letter-spacing: -0.025em;
+        }
+        h1 i {
+            color: #2563eb;
+            margin-right: 12px;
+        }
+
+        /* Section Headers */
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        h3 i {
+            margin-right: 12px;
+        }
+
+        /* Buttons */
+        button {
+            padding: 12px 24px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        }
+
+        button i {
+            margin-right: 8px;
+        }
+
+        #add-verse-btn {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+        #add-verse-btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        #back-to-main-btn {
+            background-color: #e5e7eb;
+            color: #1f2937;
+        }
+        #back-to-main-btn:hover {
+            background-color: #d1d5db;
+            transform: translateX(-2px);
+        }
+
+        #fetch-verse-btn {
+            background-color: #10b981;
+            color: #ffffff;
+        }
+        #fetch-verse-btn:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+        }
+
+        #save-fetched-verse-btn {
+            background-color: #2563eb;
+            color: #ffffff;
+            width: 100%;
+        }
+        #save-fetched-verse-btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        #save-custom-verse-btn {
+            background-color: #f59e0b;
+            color: #ffffff;
+            width: 100%;
+        }
+        #save-custom-verse-btn:hover {
+            background-color: #d97706;
+            transform: translateY(-2px);
+        }
+
+        .delete-verse-btn {
+            background: none;
+            box-shadow: none;
+            color: #ef4444;
+            padding: 0;
+            margin: 0;
+            transition: color 0.2s ease-in-out;
+        }
+        .delete-verse-btn:hover {
+            color: #dc2626;
+            transform: none; /* Override translateY for delete button */
+        }
+
+        /* Form Elements */
+        label {
+            display: block;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        input[type="email"],
+        input[type="password"],
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            transition: all 0.15s ease-in-out;
+            box-sizing: border-box; /* Ensure padding doesn't increase width */
+        }
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+        textarea {
+            resize: vertical;
+        }
+
+        /* Checkbox */
+        input[type="checkbox"] {
+            height: 20px;
+            width: 20px;
+            color: #2563eb;
+            border-color: #d1d5db;
+            border-radius: 4px;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+        input[type="checkbox"]:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+
+        /* Layout Helpers */
+        .hidden {
+            display: none !important;
+        }
+        .space-y-6 > *:not(:last-child) {
+            margin-bottom: 24px;
+        }
+        .space-y-8 > *:not(:last-child) {
+            margin-bottom: 32px;
+        }
+        .flex {
+            display: flex;
+        }
+        .justify-between {
+            justify-content: space-between;
+        }
+        .items-center {
+            align-items: center;
+        }
+        .items-end {
+            align-items: flex-end;
+        }
+        .items-start {
+            align-items: flex-start;
+        }
+        .flex-col {
+            flex-direction: column;
+        }
+        .flex-grow {
+            flex-grow: 1;
+        }
+        .grid {
+            display: grid;
+        }
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        .gap-4 {
+            gap: 16px;
+        }
+        .gap-6 {
+            gap: 24px;
+        }
+        .mb-2 { margin-bottom: 8px; }
+        .mb-3 { margin-bottom: 12px; }
+        .mb-4 { margin-bottom: 16px; }
+        .mb-5 { margin-bottom: 20px; }
+        .mb-6 { margin-bottom: 24px; }
+        .mb-8 { margin-bottom: 32px; }
+        .mt-4 { margin-top: 16px; }
+        .mt-6 { margin-top: 24px; }
+        .ml-2 { margin-left: 8px; }
+        .ml-4 { margin-left: 16px; }
+        .mr-2 { margin-right: 8px; }
+        .mr-3 { margin-right: 12px; }
+        .pr-2 { padding-right: 8px; }
+        .pt-2 { padding-top: 8px; }
+
+        /* Card Styles */
+        .verse-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            padding: 24px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            position: relative; /* For delete button positioning */
+        }
+        .verse-card p {
+            margin: 0;
+        }
+        .verse-card .reference {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 12px;
+        }
+        .verse-card .text {
+            color: #1f2937;
+            line-height: 1.625;
+            font-size: 16px;
+            flex-grow: 1;
+            margin-bottom: 16px;
+        }
+        .verse-card .meta {
+            font-size: 12px;
+            color: #6b7280;
+            text-align: right;
+        }
+
+        /* Section Styling */
+        .api-section, .custom-section {
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            border: 1px solid;
+        }
+        .api-section {
+            background-color: #eff6ff; /* blue-50 */
+            border-color: #bfdbfe; /* blue-200 */
+        }
+        .custom-section {
+            background-color: #fffbeb; /* yellow-50 */
+            border-color: #fef3c7; /* yellow-200 */
+        }
+
+        /* Fetched Verse Display */
+        #fetched-verse-display {
+            margin-top: 24px;
+            padding: 16px;
+            background-color: #ffffff;
+            border: 1px dashed #93c5fd; /* blue-300 */
+            border-radius: 8px;
+        }
+        #fetched-verse-display p {
+            margin: 0;
+        }
+        #fetched-verse-ref {
+            color: #4b5563; /* gray-700 */
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        #fetched-verse-text {
+            color: #111827; /* gray-900 */
+            line-height: 1.625;
+            font-size: 18px;
+        }
+
+        /* No Verses Message */
+        #no-verses-message {
+            color: #6b7280;
+            text-align: center;
+            grid-column: 1 / -1; /* Span full width */
+        }
+
+        /* Custom Scrollbar */
+        #verses-list {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -70,923 +395,807 @@
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #a1a1aa;
+            background: #9ca3af;
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #71717a;
+            background: #6b7280;
         }
-        .view {
-            transition: opacity 0.3s ease-in-out;
+
+        /* Message Box */
+        #message-box, #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
-        .hidden {
-            display: none;
-            opacity: 0;
+        #message-box > div {
+            background-color: #ffffff;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            max-width: 384px;
+            width: 100%;
+            text-align: center;
         }
-        .show {
-            display: block;
-            opacity: 1;
+        #message-box-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        #message-box-body {
+            color: #374151;
+            margin-bottom: 24px;
+        }
+        #message-box-ok-btn {
+            background-color: #2563eb;
+            color: #ffffff;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        #message-box-ok-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Loading Spinner */
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        #loading-overlay > div {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #3b82f6; /* blue-500 */
+            border-radius: 50%;
+            height: 64px;
+            width: 64px;
+        }
+        #loading-overlay p {
+            color: #ffffff;
+            margin-left: 16px;
+            font-size: 18px;
+        }
+
+
+        /* Responsive Adjustments */
+        @media (min-width: 768px) {
+            .md\:flex-row {
+                flex-direction: row;
+            }
+            .md\:mb-0 {
+                margin-bottom: 0;
+            }
+            /* Removed md:grid-cols-2 for verses-list */
+            .md\:grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .md\:p-8 {
+                padding: 32px;
+            }
+            .md\:pt-0 {
+                padding-top: 0;
+            }
+        }
+        /* Auth specific styles */
+        #auth-section {
+            margin-bottom: 24px;
+            padding: 24px;
+            background-color: #e0f2fe; /* Light blue background for auth section */
+            border-radius: 12px;
+            border: 1px solid #90cdf4;
+        }
+        #auth-section input {
+            margin-bottom: 12px;
+        }
+        #auth-section button {
+            width: 100%;
+            margin-top: 12px;
+            background-color: #2563eb;
+            color: white;
+        }
+        #auth-section button:hover {
+            background-color: #1d4ed8;
+        }
+        #auth-section .toggle-link {
+            text-align: center;
+            margin-top: 16px;
+            color: #3b82f6;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        #auth-section .toggle-link:hover {
+            text-decoration: underline;
+        }
+        #auth-status {
+            text-align: center;
+            margin-bottom: 16px;
+            color: #10b981;
+            font-weight: 600;
+        }
+        #logout-btn {
+            background-color: #ef4444;
+            color: white;
+            margin-left: 10px;
+        }
+        #logout-btn:hover {
+            background-color: #dc2626;
+        }
+        .user-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 24px;
+            color: #1f2937;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        .user-info i {
+            margin-right: 8px;
+            color: #2563eb;
         }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
-    <div id="app-container" class="bg-white p-8 rounded-xl shadow-lg w-full border border-gray-200">
-        <!-- Login/Register View -->
-        <div id="auth-view" class="view hidden">
-            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Welcome to Verse Vault!</h1>
+    <div id="app-container">
+        <!-- Loading Indicator -->
+        <div id="loading-overlay" class="hidden">
+            <div></div>
+            <p>Loading...</p>
+        </div>
 
-            <div class="mb-4">
-                <label for="auth-username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-                <input type="text" id="auth-username" placeholder="Enter your username" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        <!-- Header -->
+        <h1>
+            <i class="fas fa-book-bible"></i>Verse Vault
+        </h1>
+
+        <!-- Authentication Section -->
+        <div id="auth-section">
+            <div id="login-form">
+                <h2 style="text-align: center;">Login</h2>
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button id="login-btn"><i class="fas fa-sign-in-alt"></i>Login</button>
+                <p class="toggle-link" id="show-signup">Don't have an account? Sign Up</p>
             </div>
-            <div class="mb-6">
-                <label for="auth-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input type="password" id="auth-password" placeholder="Enter your password" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <div id="signup-form" class="hidden">
+                <h2 style="text-align: center;">Sign Up</h2>
+                <input type="email" id="signup-email" placeholder="Email" required>
+                <input type="password" id="signup-password" placeholder="Password" required>
+                <button id="signup-btn"><i class="fas fa-user-plus"></i>Sign Up</button>
+                <p class="toggle-link" id="show-login">Already have an account? Login</p>
             </div>
-
-            <button id="login-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md mb-4">
-                Login
-            </button>
-            <button id="register-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md mb-6">
-                Register
-            </button>
-            <p id="auth-message" class="text-center text-sm mt-2 hidden"></p>
-
-            <div class="border-t border-gray-200 pt-6 mt-6">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4 text-center">Or continue without an account:</h2>
-                <button id="continue-local-btn" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md">
-                    Continue with Local Storage
-                </button>
+            <div id="auth-status" class="hidden">
+                <p class="user-info"><i class="fas fa-user-circle"></i>Logged in as: <span id="user-email"></span></p>
+                <button id="logout-btn"><i class="fas fa-sign-out-alt"></i>Logout</button>
             </div>
         </div>
 
-        <!-- Main App Content (Bible Memory App) -->
-        <div id="main-app-view" class="view hidden">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-3xl font-bold text-gray-800">Your Saved Verses</h1>
-                <div class="flex items-center space-x-4">
-                    <div id="logged-in-user" class="text-gray-600 font-medium text-sm"></div>
-                    <button id="logout-btn" class="bg-red-500 hover:bg-red-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition duration-300 shadow-md hidden">
-                        Logout
+        <!-- Main View: Saved Verses (Hidden until authenticated) -->
+        <div id="main-view" class="hidden">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                <h2>Your Saved Verses</h2>
+                <button id="add-verse-btn">
+                    <i class="fas fa-plus-circle"></i>Add New Verse
+                </button>
+            </div>
+
+            <div id="verses-list" class="grid grid-cols-1 gap-6">
+                <p id="no-verses-message">No verses saved yet. Add your first verse!</p>
+            </div>
+        </div>
+
+        <!-- Add Verse View (Hidden until authenticated) -->
+        <div id="add-verse-view" class="hidden">
+            <button id="back-to-main-btn" class="mb-6">
+                <i class="fas fa-arrow-left"></i>Back to Saved Verses
+            </button>
+
+            <h2 style="text-align: center; margin-bottom: 24px;">Add a New Verse</h2>
+
+            <!-- Add from KJV.txt File Section -->
+            <div class="api-section mb-8">
+                <h3><i class="fas fa-book-reader"></i>Fetch from KJV.txt</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+                    <div>
+                        <label for="book-select">Book:</label>
+                        <select id="book-select"></select>
+                    </div>
+                    <div>
+                        <label for="chapter-select">Chapter:</label>
+                        <select id="chapter-select">
+                            <option value="">Select Chapter</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end pt-2 md:pt-0">
+                        <div class="flex-grow">
+                            <label for="verse-input">Verse (Optional):</label>
+                            <input type="number" id="verse-input" placeholder="e.g., 16">
+                        </div>
+                        <div class="ml-4 flex items-center">
+                            <input type="checkbox" id="whole-chapter-checkbox">
+                            <label for="whole-chapter-checkbox" style="margin-bottom: 0;">Whole Chapter</label>
+                        </div>
+                    </div>
+                </div>
+                <button id="fetch-verse-btn">
+                    <i class="fas fa-search"></i>Fetch Verse
+                </button>
+
+                <!-- Fetched Verse Display -->
+                <div id="fetched-verse-display" class="hidden">
+                    <p id="fetched-verse-ref"></p>
+                    <p id="fetched-verse-text"></p>
+                    <button id="save-fetched-verse-btn" class="mt-4">
+                        <i class="fas fa-save"></i>Save Fetched Verse
                     </button>
                 </div>
             </div>
 
-            <div id="verse-list" class="space-y-4 max-h-96 overflow-y-auto pr-2">
-                <!-- Verses will be loaded here by JavaScript -->
-                <p class="text-center text-gray-500" id="no-verses-message">No verses saved yet. Add some!</p>
-            </div>
-            <button id="add-verse-btn" class="mt-8 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md">
-                Add New Verse
-            </button>
-        </div>
-
-        <!-- Save Verse View -->
-        <div id="save-verse-view" class="view hidden">
-            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Save a New Verse</h1>
-
-            <!-- Fetch Verse Section -->
-            <div class="mb-8 p-6 bg-gray-50 rounded-xl border border-gray-200 shadow-sm">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4">Fetch from Bible API (KJV Translation)</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <!-- Custom Verse Input Section -->
+            <div class="custom-section">
+                <h3><i class="fas fa-pencil-alt"></i>Input Custom Verse</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
                     <div>
-                        <label for="book-select" class="block text-sm font-medium text-gray-700 mb-1">Book</label>
-                        <select id="book-select" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white">
-                            <!-- Options will be populated by JS -->
-                        </select>
+                        <label for="custom-book-input">Book:</label>
+                        <input type="text" id="custom-book-input" placeholder="e.g., John">
                     </div>
                     <div>
-                        <label for="chapter-select" class="block text-sm font-medium text-gray-700 mb-1">Chapter</label>
-                        <select id="chapter-select" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white">
-                            <!-- Options will be populated by JS -->
-                        </select>
+                        <label for="custom-chapter-input">Chapter:</label>
+                        <input type="number" id="custom-chapter-input" placeholder="e.g., 3">
+                    </div>
+                    <div>
+                        <label for="custom-verse-numbers-input">Verse(s):</label>
+                        <input type="text" id="custom-verse-numbers-input" placeholder="e.g., 16 or 1-5">
                     </div>
                 </div>
-                <div class="flex items-center space-x-4 mb-4">
-                    <div class="flex-grow">
-                        <label for="verse-select" class="block text-sm font-medium text-gray-700 mb-1">Verse (Optional)</label>
-                        <select id="verse-select" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white">
-                            <option value="">Select Verse</option>
-                            <!-- Options will be populated by JS -->
-                        </select>
-                    </div>
-                    <div class="flex items-center pt-5">
-                        <input type="checkbox" id="whole-chapter-checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-                        <label for="whole-chapter-checkbox" class="ml-2 block text-sm text-gray-900">Whole Chapter</label>
-                    </div>
+                <div class="mb-5">
+                    <label for="custom-verse-text-area">Verse Text:</label>
+                    <textarea id="custom-verse-text-area" rows="6" placeholder="Type your custom verse text here..."></textarea>
                 </div>
-
-                <button id="fetch-verse-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md mb-4">
-                    Fetch Verse
+                <button id="save-custom-verse-btn">
+                    <i class="fas fa-bookmark"></i>Save Custom Verse
                 </button>
-
-                <div id="fetched-verse-display" class="bg-blue-50 border border-blue-200 text-blue-800 p-4 rounded-lg hidden">
-                    <p id="fetched-verse-reference" class="font-semibold mb-2"></p>
-                    <p id="fetched-verse-text" class="text-sm"></p>
-                    <button id="save-fetched-verse-btn" class="mt-4 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md">
-                        Save This Verse
-                    </button>
-                </div>
-                <p id="fetch-error-message" class="text-red-600 text-sm mt-2 hidden"></p>
-            </div>
-
-            <!-- Custom Verse Section -->
-            <div class="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-200 shadow-sm">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4">Enter Custom Verse (Any Translation)</h2>
-                <div class="mb-4">
-                    <label for="custom-book-input" class="block text-sm font-medium text-gray-700 mb-1">Book</label>
-                    <input type="text" id="custom-book-input" placeholder="e.g., John" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="custom-chapter-input" class="block text-sm font-medium text-gray-700 mb-1">Chapter</label>
-                        <input type="number" id="custom-chapter-input" placeholder="e.g., 3" min="1" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    </div>
-                    <div>
-                        <label for="custom-verse-input" class="block text-sm font-medium text-gray-700 mb-1">Verse (Start)</label>
-                        <input type="number" id="custom-verse-input" placeholder="e.g., 16" min="1" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    </div>
-                    <div>
-                        <label for="custom-end-verse-input" class="block text-sm font-medium text-gray-700 mb-1">Verse (End - Optional)</label>
-                        <input type="number" id="custom-end-verse-input" placeholder="e.g., 17" min="1" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    </div>
-                    <div>
-                        <label for="custom-translation-input" class="block text-sm font-medium text-gray-700 mb-1">Translation (Optional)</label>
-                        <input type="text" id="custom-translation-input" placeholder="e.g., KJV" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <label for="custom-verse-text-input" class="block text-sm font-medium text-gray-700 mb-1">Verse Text</label>
-                    <textarea id="custom-verse-text-input" rows="6" placeholder="Enter your custom verse text here..." class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
-                </div>
-                <button id="save-custom-verse-btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md">
-                    Save Custom Verse
-                </button>
-                <p id="custom-verse-error-message" class="text-red-600 text-sm mt-2 hidden"></p>
-                <p id="custom-verse-success-message" class="text-green-600 text-sm mt-2 hidden"></p>
-            </div>
-
-            <button id="back-to-main-btn" class="mt-8 w-full bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md">
-                Back to My Verses
-            </button>
-        </div>
-
-        <!-- Message Box for alerts -->
-        <div id="message-box" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50 hidden">
-            <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
-                <p id="message-box-text" class="text-lg font-medium text-gray-800 mb-4"></p>
-                <button id="message-box-ok-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">OK</button>
             </div>
         </div>
 
-        <!-- Confirmation Box for delete -->
-        <div id="confirm-box" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50 hidden">
-            <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
-                <p id="confirm-box-text" class="text-lg font-medium text-gray-800 mb-4"></p>
-                <div class="flex justify-center space-x-4">
-                    <button id="confirm-box-yes-btn" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">Yes</button>
-                    <button id="confirm-box-no-btn" class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">No</button>
-                </div>
+        <!-- Custom Message Box -->
+        <div id="message-box" class="hidden">
+            <div>
+                <h3 id="message-box-title"></h3>
+                <p id="message-box-body"></p>
+                <button id="message-box-ok-btn">OK</button>
             </div>
         </div>
 
     </div>
 
-    <script>
-        // --- Configuration ---
-        const SERVER_URL = 'http://versevault.ddns.net:8080'; // Make sure this matches your Node.js server port
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        // Corrected import: added 'doc' to the Firestore imports
+        import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- Global State ---
-        let loggedInUsername = null; // Stores the username if logged in
-        let useServerStorage = false; // Tracks the user's storage preference (true for server, false for local)
+        // Global Firebase Configuration and App ID
+        const appId = 'verse-vault-external'; // Hardcoded Project ID
+        const firebaseConfig = {
+            apiKey: 'AIzaSyB6W6TUe7j6nPDXNt557lHsviA2HviSD4M', // Hardcoded Web API Key
+            authDomain: 'verse-vault-external.firebaseapp.com',
+            projectId: 'verse-vault-external',
+            storageBucket: 'verse-vault-external.appspot.com',
+            messagingSenderId: '1026923647152', // Project number
+            appId: '1:1026923647152:web:a6167822a106e2365eb26d' // Your Firebase App ID from project settings
+        };
 
-        // --- Utility Functions ---
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        /**
-         * Generates a unique ID (UUID v4).
-         * @returns {string} A unique ID string.
-         */
-        function generateUUID() {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                const r = Math.random() * 16 | 0;
-                const v = c === 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
-        }
+        let currentUser = null; // To store the current authenticated user object
+        let firestoreUnsubscribe = null; // To store the Firestore unsubscribe function
 
-        /**
-         * Displays a custom message box.
-         * @param {string} message - The message to display.
-         */
-        function showMessageBox(message) {
-            const msgBox = document.getElementById('message-box');
-            document.getElementById('message-box-text').textContent = message;
-            msgBox.classList.remove('hidden');
-        }
-
-        /**
-         * Hides the custom message box.
-         */
-        function hideMessageBox() {
-            document.getElementById('message-box').classList.add('hidden');
-        }
-
-        /**
-         * Displays a custom confirmation box.
-         * @param {string} message - The message to display.
-         * @returns {Promise<boolean>} A promise that resolves to true if confirmed, false otherwise.
-         */
-        function showConfirmBox(message) {
-            return new Promise(resolve => {
-                const confirmBox = document.getElementById('confirm-box');
-                document.getElementById('confirm-box-text').textContent = message;
-                confirmBox.classList.remove('hidden');
-
-                const yesBtn = document.getElementById('confirm-box-yes-btn');
-                const noBtn = document.getElementById('confirm-box-no-btn');
-
-                const handleYes = () => {
-                    confirmBox.classList.add('hidden');
-                    yesBtn.removeEventListener('click', handleYes);
-                    noBtn.removeEventListener('click', handleNo);
-                    resolve(true);
-                };
-
-                const handleNo = () => {
-                    confirmBox.classList.add('hidden');
-                    yesBtn.removeEventListener('click', handleYes);
-                    noBtn.removeEventListener('click', handleNo);
-                    resolve(false);
-                };
-
-                yesBtn.addEventListener('click', handleYes);
-                noBtn.addEventListener('click', handleNo);
-            });
-        }
-
-
-        // --- DOM Elements ---
-        const authView = document.getElementById('auth-view');
-        const mainAppView = document.getElementById('main-app-view');
-        const saveVerseView = document.getElementById('save-verse-view');
-
-        // Auth elements
-        const authUsernameInput = document.getElementById('auth-username');
-        const authPasswordInput = document.getElementById('auth-password');
+        // DOM Elements
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const authSection = document.getElementById('auth-section');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const authStatus = document.getElementById('auth-status');
+        const userEmailSpan = document.getElementById('user-email');
+        const loginEmailInput = document.getElementById('login-email');
+        const loginPasswordInput = document.getElementById('login-password');
         const loginBtn = document.getElementById('login-btn');
-        const registerBtn = document.getElementById('register-btn');
-        const authMessage = document.getElementById('auth-message');
-        const continueLocalBtn = document.getElementById('continue-local-btn');
-
-        // Main App elements
-        const loggedInUserSpan = document.getElementById('logged-in-user');
+        const signupEmailInput = document.getElementById('signup-email');
+        const signupPasswordInput = document.getElementById('signup-password');
+        const signupBtn = document.getElementById('signup-btn');
         const logoutBtn = document.getElementById('logout-btn');
+        const showSignupLink = document.getElementById('show-signup');
+        const showLoginLink = document.getElementById('show-login');
+
+        const mainView = document.getElementById('main-view');
+        const addVerseView = document.getElementById('add-verse-view');
         const addVerseBtn = document.getElementById('add-verse-btn');
-        const verseList = document.getElementById('verse-list');
-        const noVersesMessage = document.getElementById('no-verses-message');
         const backToMainBtn = document.getElementById('back-to-main-btn');
+        const versesList = document.getElementById('verses-list');
+        const noVersesMessage = document.getElementById('no-verses-message');
 
-
-        // Fetch Verse Elements
+        // KJV.txt Fetch Elements
         const bookSelect = document.getElementById('book-select');
         const chapterSelect = document.getElementById('chapter-select');
-        const verseSelect = document.getElementById('verse-select');
+        const verseInput = document.getElementById('verse-input');
         const wholeChapterCheckbox = document.getElementById('whole-chapter-checkbox');
         const fetchVerseBtn = document.getElementById('fetch-verse-btn');
         const fetchedVerseDisplay = document.getElementById('fetched-verse-display');
-        const fetchedVerseReference = document.getElementById('fetched-verse-reference');
+        const fetchedVerseRef = document.getElementById('fetched-verse-ref');
         const fetchedVerseText = document.getElementById('fetched-verse-text');
         const saveFetchedVerseBtn = document.getElementById('save-fetched-verse-btn');
-        const fetchErrorMessage = document.getElementById('fetch-error-message');
 
         // Custom Verse Elements
         const customBookInput = document.getElementById('custom-book-input');
         const customChapterInput = document.getElementById('custom-chapter-input');
-        const customVerseInput = document.getElementById('custom-verse-input');
-        const customEndVerseInput = document.getElementById('custom-end-verse-input');
-        const customTranslationInput = document.getElementById('custom-translation-input');
-        const customVerseTextInput = document.getElementById('custom-verse-text-input');
+        const customVerseNumbersInput = document.getElementById('custom-verse-numbers-input');
+        const customVerseTextArea = document.getElementById('custom-verse-text-area');
         const saveCustomVerseBtn = document.getElementById('save-custom-verse-btn');
-        const customVerseErrorMessage = document.getElementById('custom-verse-error-message');
-        const customVerseSuccessMessage = document.getElementById('custom-verse-success-message');
 
-        // Close message box
-        document.getElementById('message-box-ok-btn').addEventListener('click', hideMessageBox);
+        // Message Box Elements
+        const messageBox = document.getElementById('message-box');
+        const messageBoxTitle = document.getElementById('message-box-title');
+        const messageBoxBody = document.getElementById('message-box-body');
+        const messageBoxOkBtn = document.getElementById('message-box-ok-btn');
 
-        // --- View Management ---
+        // Global variable to store parsed Bible data from kjv.txt
+        let parsedBibleData = {};
+        let bookAbbreviations = [];
 
-        /**
-         * Shows the specified view and hides others.
-         * @param {HTMLElement} viewToShow - The view element to display.
-         */
-        function showView(viewToShow) {
-            [authView, mainAppView, saveVerseView].forEach(view => {
-                if (view === viewToShow) {
-                    view.classList.remove('hidden');
-                    view.classList.add('show');
-                } else {
-                    view.classList.add('hidden');
-                    view.classList.remove('show');
-                }
-            });
-        }
+        // Canonical order of Bible books (King James Version abbreviations)
+        const bibleBookOrder = [
+            "GEN", "EXO", "LEV", "NUM", "DEU", "JOS", "JDG", "RUT", "1SA", "2SA",
+            "1KI", "2KI", "1CH", "2CH", "EZR", "NEH", "EST", "JOB", "PSA", "PRO",
+            "ECC", "SNG", "ISA", "JER", "LAM", "EZE", "DAN", "HOS", "JOL", "AMO",
+            "OBA", "JON", "MIC", "NAM", "HAB", "ZEP", "HAG", "ZEC", "MAL", "MAT",
+            "MAR", "LUK", "JOH", "ACT", "ROM", "1CO", "2CO", "GAL", "EPH", "PHP",
+            "COL", "1TH", "2TH", "1TI", "2TI", "TIT", "PHM", "HEB", "JAM", "1PE",
+            "2PE", "1JO", "2JO", "3JO", "JUD", "REV"
+        ];
 
-        /**
-         * Renders the main app content based on storage choice.
-         * Reloads verses and updates UI.
-         */
-        async function renderMainApp() {
-            showView(mainAppView);
-            updateLoggedInUserDisplay();
-            await loadAndRenderVerses();
-        }
+        // --- Utility Functions ---
 
-        /**
-         * Updates the display for logged-in user and logout button.
-         */
-        function updateLoggedInUserDisplay() {
-            if (loggedInUsername) {
-                loggedInUserSpan.textContent = `Logged in as: ${loggedInUsername}`;
-                logoutBtn.classList.remove('hidden');
-            } else {
-                loggedInUserSpan.textContent = '';
-                logoutBtn.classList.add('hidden');
-            }
-        }
+        const showLoading = () => loadingOverlay.classList.remove('hidden');
+        const hideLoading = () => loadingOverlay.classList.add('hidden');
 
-        /**
-         * Renders the save verse page and initializes dropdowns.
-         */
-        function renderSaveVersePage() {
-            showView(saveVerseView);
-            populateBookSelect();
-            populateChapterSelect(bookSelect.value); // Populate chapters for initial book
-            resetFetchVerseForm();
-            resetCustomVerseForm();
-        }
+        const showMessageBox = (title, message, onConfirm = null) => {
+            messageBoxTitle.textContent = title;
+            messageBoxBody.textContent = message;
+            messageBoxOkBtn.onclick = () => {
+                messageBox.classList.add('hidden');
+                if (onConfirm) onConfirm(true);
+            };
+            messageBox.classList.remove('hidden');
+        };
 
         // --- Authentication Functions ---
 
-        /**
-         * Handles user registration.
-         */
-        async function handleRegister() {
-            const username = authUsernameInput.value.trim();
-            const password = authPasswordInput.value.trim();
-            authMessage.classList.add('hidden');
-            authMessage.className = 'text-center text-sm mt-2'; // Reset classes
+        showSignupLink.addEventListener('click', () => {
+            loginForm.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+            loginEmailInput.value = '';
+            loginPasswordInput.value = '';
+        });
 
-            if (!username || !password) {
-                authMessage.textContent = 'Please enter both username and password.';
-                authMessage.classList.remove('hidden');
-                authMessage.classList.add('text-red-600');
+        showLoginLink.addEventListener('click', () => {
+            signupForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+            signupEmailInput.value = '';
+            signupPasswordInput.value = '';
+        });
+
+        signupBtn.addEventListener('click', async () => {
+            const email = signupEmailInput.value;
+            const password = signupPasswordInput.value;
+            if (!email || !password) {
+                showMessageBox('Input Error', 'Please enter both email and password.');
                 return;
             }
-
+            showLoading();
             try {
-                registerBtn.textContent = 'Registering...';
-                registerBtn.disabled = true;
-                loginBtn.disabled = true; // Disable login during registration
-                continueLocalBtn.disabled = true;
-
-                const response = await fetch(`${SERVER_URL}/register`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    authMessage.textContent = data.message;
-                    authMessage.classList.remove('hidden');
-                    authMessage.classList.add('text-green-600');
-                } else {
-                    authMessage.textContent = data.message || 'Registration failed.';
-                    authMessage.classList.remove('hidden');
-                    authMessage.classList.add('text-red-600');
-                }
+                await createUserWithEmailAndPassword(auth, email, password);
+                showMessageBox('Success', 'Account created successfully! You are now logged in.');
+                signupEmailInput.value = '';
+                signupPasswordInput.value = '';
             } catch (error) {
-                console.error('Registration error:', error);
-                authMessage.textContent = 'Network error or server unavailable.';
-                authMessage.classList.remove('hidden');
-                authMessage.classList.add('text-red-600');
+                console.error('Sign Up Error:', error);
+                showMessageBox('Sign Up Failed', `Error: ${error.message}`);
             } finally {
-                registerBtn.textContent = 'Register';
-                registerBtn.disabled = false;
-                loginBtn.disabled = false;
-                continueLocalBtn.disabled = false;
+                hideLoading();
             }
-        }
+        });
 
-        /**
-         * Handles user login.
-         */
-        async function handleLogin() {
-            const username = authUsernameInput.value.trim();
-            const password = authPasswordInput.value.trim();
-            authMessage.classList.add('hidden');
-            authMessage.className = 'text-center text-sm mt-2'; // Reset classes
-
-            if (!username || !password) {
-                authMessage.textContent = 'Please enter both username and password.';
-                authMessage.classList.remove('hidden');
-                authMessage.classList.add('text-red-600');
+        loginBtn.addEventListener('click', async () => {
+            const email = loginEmailInput.value;
+            const password = loginPasswordInput.value;
+            if (!email || !password) {
+                showMessageBox('Input Error', 'Please enter both email and password.');
                 return;
             }
-
+            showLoading();
             try {
-                loginBtn.textContent = 'Logging In...';
-                loginBtn.disabled = true;
-                registerBtn.disabled = true; // Disable register during login
-                continueLocalBtn.disabled = true;
-
-                const response = await fetch(`${SERVER_URL}/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    loggedInUsername = data.username;
-                    useServerStorage = true; // Always use server storage upon login
-                    showMessageBox(`Welcome back, ${loggedInUsername}!`);
-                    await renderMainApp(); // Render main app after successful login
-                } else {
-                    authMessage.textContent = data.message || 'Login failed.';
-                    authMessage.classList.remove('hidden');
-                    authMessage.classList.add('text-red-600');
-                }
+                await signInWithEmailAndPassword(auth, email, password);
+                showMessageBox('Success', 'Logged in successfully!');
+                loginEmailInput.value = '';
+                loginPasswordInput.value = '';
             } catch (error) {
-                console.error('Login error:', error);
-                authMessage.textContent = 'Network error or server unavailable.';
-                authMessage.classList.remove('hidden');
-                authMessage.classList.add('text-red-600');
+                console.error('Login Error:', error);
+                showMessageBox('Login Failed', `Error: ${error.message}`);
             } finally {
-                loginBtn.textContent = 'Login';
-                loginBtn.disabled = false;
-                registerBtn.disabled = false;
-                continueLocalBtn.disabled = false;
+                hideLoading();
             }
-        }
+        });
 
-        /**
-         * Handles user logout.
-         */
-        function handleLogout() {
-            loggedInUsername = null;
-            useServerStorage = false; // Revert to local storage implied for next session
-            showMessageBox('You have been logged out.');
-            showView(authView); // Go back to auth view
-            authUsernameInput.value = '';
-            authPasswordInput.value = '';
-            authMessage.classList.add('hidden');
-        }
+        logoutBtn.addEventListener('click', async () => {
+            showLoading();
+            try {
+                await signOut(auth);
+                showMessageBox('Logged Out', 'You have been logged out.');
+            } catch (error) {
+                console.error('Logout Error:', error);
+                showMessageBox('Logout Failed', `Error: ${error.message}`);
+            } finally {
+                hideLoading();
+            }
+        });
 
-        // --- Data Storage Operations (Unified) ---
-
-        /**
-         * Retrieves saved verses based on current storage choice.
-         * @returns {Promise<Array<Object>>} An array of verse objects.
-         */
-        async function getSavedVerses() {
-            if (useServerStorage && loggedInUsername) {
-                try {
-                    const response = await fetch(`${SERVER_URL}/verses?username=${loggedInUsername}`);
-                    if (!response.ok) {
-                        throw new Error(`Server error: ${response.statusText}`);
-                    }
-                    const data = await response.json();
-                    return data.verses || [];
-                }
-                catch (error) {
-                    console.error('Error fetching verses from server:', error);
-                    showMessageBox('Could not load verses from server. Please check your connection or try again later.');
-                    return [];
-                }
+        // --- Firebase Authentication State Listener ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                authSection.classList.add('hidden');
+                mainView.classList.remove('hidden');
+                userEmailSpan.textContent = user.email;
+                authStatus.classList.remove('hidden');
+                // Setup Firestore listener when user logs in
+                setupFirestoreListener(user.uid);
             } else {
-                try {
-                    const verses = localStorage.getItem('bibleMemoryVerses');
-                    return verses ? JSON.parse(verses) : [];
-                } catch (error) {
-                    console.error("Error parsing verses from local storage:", error);
-                    return [];
+                currentUser = null;
+                authSection.classList.remove('hidden');
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                mainView.classList.add('hidden');
+                addVerseView.classList.add('hidden');
+                authStatus.classList.add('hidden');
+                // Unsubscribe from Firestore updates when user logs out
+                if (firestoreUnsubscribe) {
+                    firestoreUnsubscribe();
+                    firestoreUnsubscribe = null;
                 }
-            }
-        }
-
-        /**
-         * Saves a new verse based on current storage choice.
-         * @param {Object} verse - The verse object to save.
-         */
-        async function saveVerse(verse) {
-            if (useServerStorage && loggedInUsername) {
-                try {
-                    const response = await fetch(`${SERVER_URL}/verses`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username: loggedInUsername, verse })
-                    });
-                    if (!response.ok) {
-                        throw new Error(`Server error: ${response.statusText}`);
-                    }
-                    const data = await response.json();
-                    showMessageBox(data.message || 'Verse saved successfully to server!');
-                } catch (error) {
-                    console.error('Error saving verse to server:', error);
-                    showMessageBox('Failed to save verse to server. Please try again.');
-                    return; // Stop further execution if server save fails
-                }
-            } else {
-                const verses = (await getSavedVerses()).filter(v => v.id !== verse.id); // Ensure no duplicates
-                verses.push(verse);
-                localStorage.setItem('bibleMemoryVerses', JSON.stringify(verses));
-                showMessageBox('Verse saved successfully to local storage!');
-            }
-            await loadAndRenderVerses(); // Re-render the main page to show the new verse
-        }
-
-        /**
-         * Deletes a verse based on current storage choice.
-         * @param {string} id - The ID of the verse to delete.
-         */
-        async function deleteVerse(id) {
-            const confirmed = await showConfirmBox('Are you sure you want to delete this verse?');
-            if (!confirmed) {
-                return;
-            }
-
-            if (useServerStorage && loggedInUsername) {
-                try {
-                    const response = await fetch(`${SERVER_URL}/verses/${id}?username=${loggedInUsername}`, {
-                        method: 'DELETE'
-                    });
-                    if (!response.ok) {
-                        throw new Error(`Server error: ${response.statusText}`);
-                    }
-                    const data = await response.json();
-                    showMessageBox(data.message || 'Verse deleted successfully from server.');
-                } catch (error) {
-                    console.error('Error deleting verse from server:', error);
-                    showMessageBox('Failed to delete verse from server. Please try again.');
-                    return; // Stop further execution if server delete fails
-                }
-            } else {
-                let verses = await getSavedVerses(); // Use await as getSavedVerses is now async
-                verses = verses.filter(verse => verse.id !== id);
-                localStorage.setItem('bibleMemoryVerses', JSON.stringify(verses));
-                showMessageBox('Verse deleted from local storage.');
-            }
-            await loadAndRenderVerses(); // Re-render the main page
-        }
-
-        /**
-         * Loads verses from the selected storage and renders them.
-         */
-        async function loadAndRenderVerses() {
-            const verses = await getSavedVerses();
-            verseList.innerHTML = ''; // Clear existing list
-
-            if (verses.length === 0) {
+                versesList.innerHTML = ''; // Clear verses on logout
                 noVersesMessage.classList.remove('hidden');
-            } else {
-                noVersesMessage.classList.add('hidden');
-                verses.forEach(verse => {
-                    const verseCard = document.createElement('div');
-                    verseCard.className = 'bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center';
-                    verseCard.innerHTML = `
-                        <div class="mb-2 sm:mb-0 sm:mr-4 flex-grow">
-                            <p class="font-semibold text-lg text-indigo-700">${verse.reference}</p>
-                            <p class="text-gray-800 text-sm mt-1 leading-relaxed">${verse.text}</p>
-                        </div>
-                        <button class="delete-verse-btn bg-red-500 hover:bg-red-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md self-end sm:self-center" data-id="${verse.id}">
-                            Delete
-                        </button>
-                    `;
-                    verseList.appendChild(verseCard);
-                });
-
-                // Attach event listeners to delete buttons
-                document.querySelectorAll('.delete-verse-btn').forEach(button => {
-                    button.addEventListener('click', (event) => {
-                        const idToDelete = event.target.dataset.id;
-                        deleteVerse(idToDelete);
-                    });
-                });
             }
-        }
+        });
 
+        // --- Firestore Operations ---
 
-        // --- Bible API Integration ---
+        const setupFirestoreListener = (userId) => {
+            if (firestoreUnsubscribe) {
+                firestoreUnsubscribe(); // Unsubscribe from previous listener if any
+            }
+            const versesCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/verses`);
+            firestoreUnsubscribe = onSnapshot(query(versesCollectionRef), (snapshot) => {
+                versesList.innerHTML = ''; // Clear existing list
+                if (snapshot.empty) {
+                    noVersesMessage.classList.remove('hidden');
+                } else {
+                    noVersesMessage.classList.add('hidden');
+                    const verses = [];
+                    snapshot.forEach(doc => {
+                        const verseData = doc.data();
+                        verses.push({ id: doc.id, ...verseData }); // Store Firestore document ID
+                    });
+                    // Sort verses by timestamp in descending order
+                    verses.sort((a, b) => (b.timestamp?.toDate() || 0) - (a.timestamp?.toDate() || 0));
 
-        // List of common Bible books
-        const bibleBooks = [
-            "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth",
-            "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra",
-            "Nehemiah", "Esther", "Job", "Psalm", "Proverbs", "Ecclesiastes", "Song of Solomon",
-            "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos",
-            "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah",
-            "Malachi", "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians",
-            "2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians",
-            "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James",
-            "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"
-        ];
+                    verses.forEach((verse) => {
+                        const verseCard = document.createElement('div');
+                        verseCard.className = 'verse-card';
+                        verseCard.innerHTML = `
+                            <div class="flex justify-between items-start mb-3">
+                                <p class="reference">${verse.reference}</p>
+                                <button data-id="${verse.id}" class="delete-verse-btn" title="Delete Verse">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                            <p class="text">${verse.text}</p>
+                            <p class="meta">Source: ${verse.source} | Saved: ${verse.timestamp ? new Date(verse.timestamp.toDate()).toLocaleString() : 'N/A'}</p>
+                        `;
+                        versesList.appendChild(verseCard);
+                    });
 
-        /**
-         * Populates the book select dropdown.
-         */
-        function populateBookSelect() {
-            bookSelect.innerHTML = ''; // Clear existing options
-            bibleBooks.forEach(book => {
+                    document.querySelectorAll('.delete-verse-btn').forEach(button => {
+                        button.addEventListener('click', (event) => {
+                            const idToDelete = event.currentTarget.dataset.id;
+                            showMessageBox('Confirm Delete', 'Are you sure you want to delete this verse?', (confirmed) => {
+                                if (confirmed) {
+                                    deleteVerse(idToDelete);
+                                }
+                            });
+                        });
+                    });
+                }
+            }, (error) => {
+                console.error("Error fetching verses from Firestore:", error);
+                showMessageBox('Data Error', `Failed to load verses: ${error.message}`);
+            });
+        };
+
+        const deleteVerse = async (idToDelete) => {
+            if (!currentUser) {
+                showMessageBox('Error', 'You must be logged in to delete verses.');
+                return;
+            }
+            showLoading();
+            try {
+                // Corrected usage: doc(db, path, id)
+                await deleteDoc(doc(db, `artifacts/${appId}/users/${currentUser.uid}/verses`, idToDelete));
+                showMessageBox('Deleted', 'Verse deleted successfully.');
+            } catch (error) {
+                console.error('Error deleting verse:', error);
+                showMessageBox('Delete Error', `Failed to delete verse: ${error.message}`);
+            } finally {
+                hideLoading();
+            }
+        };
+
+        // --- Navigation ---
+        addVerseBtn.addEventListener('click', () => {
+            if (!currentUser) {
+                showMessageBox('Login Required', 'Please log in to add verses.');
+                return;
+            }
+            mainView.classList.add('hidden');
+            addVerseView.classList.remove('hidden');
+            fetchedVerseDisplay.classList.add('hidden');
+            fetchedVerseRef.textContent = '';
+            fetchedVerseText.textContent = '';
+        });
+
+        backToMainBtn.addEventListener('click', () => {
+            addVerseView.classList.add('hidden');
+            mainView.classList.remove('hidden');
+        });
+
+        // --- KJV.txt Loading and Parsing ---
+
+        const loadKjvText = async () => {
+            showLoading();
+            try {
+                const response = await fetch('kjv.txt'); // Assuming kjv.txt is in the same directory
+                if (!response.ok) {
+                    throw new Error(`Failed to load kjv.txt: ${response.statusText} (Status: ${response.status})`);
+                }
+                const text = await response.text();
+
+                const lines = text.split('\n');
+                const tempBibleData = {};
+                const encounteredBookAbbreviations = new Set();
+
+                lines.forEach(line => {
+                    line = line.trim();
+                    if (!line) return;
+
+                    const parts = line.match(/^([A-Z0-9]+)\s(\d+):(\d+)\s(.*)/);
+                    if (parts) {
+                        const bookAbbr = parts[1];
+                        const chapterNum = parseInt(parts[2]);
+                        const verseNum = parseInt(parts[3]);
+                        const verseText = parts[4].trim();
+
+                        if (!tempBibleData[bookAbbr]) {
+                            tempBibleData[bookAbbr] = {};
+                        }
+                        if (!tempBibleData[bookAbbr][chapterNum]) {
+                            tempBibleData[bookAbbr][chapterNum] = {};
+                        }
+                        tempBibleData[bookAbbr][chapterNum][verseNum] = verseText;
+                        encounteredBookAbbreviations.add(bookAbbr);
+                    } else {
+                        console.warn(`Skipping malformed line: ${line}`);
+                    }
+                });
+
+                parsedBibleData = tempBibleData;
+                bookAbbreviations = bibleBookOrder.filter(abbr => encounteredBookAbbreviations.has(abbr));
+
+                console.log('KJV.txt loaded and parsed successfully.');
+                populateBooks();
+            } catch (error) {
+                console.error('Error loading or parsing KJV.txt:', error);
+                showMessageBox('Data Load Error', `Failed to load Bible data: ${error.message}. Please ensure 'kjv.txt' is available and correctly formatted.`);
+            } finally {
+                hideLoading();
+            }
+        };
+
+        const populateBooks = () => {
+            bookSelect.innerHTML = '<option value="">Select Book</option>';
+            bookAbbreviations.forEach(abbr => {
                 const option = document.createElement('option');
-                option.value = book;
-                option.textContent = book;
+                option.value = abbr;
+                option.textContent = abbr;
                 bookSelect.appendChild(option);
             });
-        }
+        };
 
-        /**
-         * Populates the chapter select dropdown based on the selected book.
-         * (Note: This is a generic range as API doesn't provide chapter counts per book)
-         * @param {string} book - The selected book.
-         */
-        function populateChapterSelect(book) {
-            chapterSelect.innerHTML = '';
-            // For simplicity, provide a generic range of chapters.
-            // The API will handle invalid chapter/verse combinations.
-            for (let i = 1; i <= 150; i++) { // Max chapters in Psalms is 150
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i;
-                chapterSelect.appendChild(option);
+        const populateChapters = () => {
+            chapterSelect.innerHTML = '<option value="">Select Chapter</option>';
+            const selectedBookAbbr = bookSelect.value;
+            const bookChapters = parsedBibleData[selectedBookAbbr];
+
+            if (bookChapters) {
+                const chapters = Object.keys(bookChapters).map(Number).sort((a, b) => a - b);
+                chapters.forEach(chapterNum => {
+                    const option = document.createElement('option');
+                    option.value = chapterNum;
+                    option.textContent = chapterNum;
+                    chapterSelect.appendChild(option);
+                });
             }
-        }
+        };
 
-        /**
-         * Populates the verse select dropdown for up to 176 verses (Psalm 119).
-         * @param {number} maxVerses - The maximum number of verses to display (approximate).
-         */
-        function populateVerseSelect(maxVerses = 176) {
-            verseSelect.innerHTML = '<option value="">Select Verse</option>';
-            for (let i = 1; i <= maxVerses; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i;
-                verseSelect.appendChild(option);
-            }
-        }
-
-        /**
-         * Fetches a Bible verse from bible-api.com.
-         */
-        async function fetchBibleVerse() {
-            const book = bookSelect.value;
-            const chapter = chapterSelect.value;
-            let verse = verseSelect.value;
-            const isWholeChapter = wholeChapterCheckbox.checked;
-
-            fetchErrorMessage.classList.add('hidden'); // Hide previous errors
-            fetchedVerseDisplay.classList.add('hidden'); // Hide previous results
-
-            if (!book || !chapter) {
-                fetchErrorMessage.textContent = 'Please select a book and chapter.';
-                fetchErrorMessage.classList.remove('hidden');
-                return;
-            }
-
-            let apiUrl = `https://bible-api.com/${book}+${chapter}`;
-            let referenceDisplay = `${book} ${chapter}`;
-
-            if (!isWholeChapter && verse) {
-                apiUrl += `:${verse}`;
-                referenceDisplay += `:${verse}`;
-            } else if (!isWholeChapter && !verse) {
-                // If whole chapter is not checked, and no verse is selected,
-                // the API defaults to the entire chapter if no verse is specified, which is fine.
-                // We'll proceed without a specific verse.
-            }
-
-            apiUrl += '?translation=kjv';
-
-            try {
-                // Add loading state
-                fetchVerseBtn.textContent = 'Fetching...';
-                fetchVerseBtn.disabled = true;
-
-                const response = await fetch(apiUrl);
-                const data = await response.json();
-
-                if (data.error) {
-                    fetchErrorMessage.textContent = `Error: ${data.error}`;
-                    fetchErrorMessage.classList.remove('hidden');
-                    console.error('Bible API Error:', data.error);
-                } else if (data.text) {
-                    let formattedText = '';
-                    let tempReferenceDisplay = `${book} ${chapter}`; // Use a temp variable for refining
-
-                    if (data.verses && data.verses.length > 0) {
-                        // Prioritize data.verses for more accurate verse separation and handling
-                        const verseContents = data.verses.map(v => {
-                            // Remove only the leading verse number (e.g., "1: " or "1 ") if present
-                            // and remove bracketed numbers like [1] that might appear in the text body
-                            let content = v.text.trim();
-                            content = content.replace(/^(\d+:\s*|\d+\s*)/, '').trim(); // Remove leading '1: ' or '1 '
-                            content = content.replace(/\[\d+\]/g, '').trim(); // Remove bracketed numbers like [1]
-                            return content;
-                        });
-                        // Join individual verse contents with a space. Then, normalize multiple spaces to single spaces.
-                        formattedText = verseContents.filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
-
-                        // Refine the reference display based on the actual verses returned by the API
-                        const firstVerse = data.verses[0];
-                        const lastVerse = data.verses[data.verses.length - 1];
-                        if (firstVerse.verse && lastVerse.verse && firstVerse.verse !== lastVerse.verse) {
-                            tempReferenceDisplay = `${firstVerse.book_name} ${firstVerse.chapter}:${firstVerse.verse}-${lastVerse.verse}`;
-                        } else if (firstVerse.verse) {
-                            tempReferenceDisplay = `${firstVerse.book_name} ${firstVerse.chapter}:${firstVerse.verse}`;
-                        } else {
-                            tempReferenceDisplay = `${firstVerse.book_name} ${firstVerse.chapter}`; // For whole chapter if no verse numbers
-                        }
-                    } else {
-                        // Fallback for when data.verses is not available (e.g., single verse, or unexpected API response format)
-                        formattedText = data.text.trim();
-                        // Only remove bracketed numbers and normalize spaces. Do not remove leading verse numbers here,
-                        // as the API might send raw text with numbers integrated differently.
-                        formattedText = formattedText.replace(/\[\d+\]/g, '').trim();
-                        formattedText = formattedText.replace(/\s+/g, ' ').trim();
-                    }
-
-                    fetchedVerseReference.textContent = `${tempReferenceDisplay} (KJV)`; // Use the refined reference
-                    fetchedVerseText.textContent = formattedText;
-                    fetchedVerseDisplay.classList.remove('hidden');
-
-                    // Store the fetched verse temporarily for saving
-                    fetchedVerseDisplay.dataset.verseRef = `${tempReferenceDisplay} (KJV)`;
-                    fetchedVerseDisplay.dataset.verseText = formattedText;
-
-                } else {
-                    fetchErrorMessage.textContent = 'Could not find the verse. Please check the reference.';
-                    fetchErrorMessage.classList.remove('hidden');
-                }
-            } catch (error) {
-                fetchErrorMessage.textContent = 'Network error or invalid response from API. Please try again.';
-                fetchErrorMessage.classList.remove('hidden');
-                console.error('Fetch error:', error);
-            } finally {
-                fetchVerseBtn.textContent = 'Fetch Verse';
-                fetchVerseBtn.disabled = false;
-            }
-        }
-
-        /**
-         * Resets the fetch verse form fields and display.
-         */
-        function resetFetchVerseForm() {
-            bookSelect.value = bibleBooks[0]; // Set to first book
-            chapterSelect.value = '1';
-            verseSelect.value = '';
-            wholeChapterCheckbox.checked = false;
-            verseSelect.disabled = false; // Ensure it's enabled by default
-            fetchedVerseDisplay.classList.add('hidden');
-            fetchErrorMessage.classList.add('hidden');
-        }
-
-        // --- Custom Verse Handlers ---
-
-        /**
-         * Saves a custom entered verse.
-         */
-        async function saveCustomVerse() {
-            const book = customBookInput.value.trim();
-            const chapter = customChapterInput.value.trim();
-            const verse = customVerseInput.value.trim();
-            const endVerse = customEndVerseInput.value.trim();
-            const translation = customTranslationInput.value.trim();
-            const text = customVerseTextInput.value.trim();
-
-            customVerseErrorMessage.classList.add('hidden');
-            customVerseSuccessMessage.classList.add('hidden');
-
-            if (!book || !chapter || !text) {
-                customVerseErrorMessage.textContent = 'Book, Chapter, and Verse Text are required for custom verses.';
-                customVerseErrorMessage.classList.remove('hidden');
-                return;
-            }
-
-            let reference = `${book} ${chapter}`;
-            if (verse) {
-                reference += `:${verse}`;
-                if (endVerse && parseInt(endVerse) > parseInt(verse)) {
-                    reference += `-${endVerse}`;
-                }
-            }
-
-            if (translation) {
-                reference += ` (${translation.toUpperCase()})`;
-            } else {
-                reference += ` (Custom)`;
-            }
-
-            const newVerse = {
-                id: generateUUID(),
-                reference: reference,
-                text: text
-            };
-
-            await saveVerse(newVerse); // Use the unified saveVerse function
-            customVerseSuccessMessage.textContent = 'Custom verse saved successfully!';
-            customVerseSuccessMessage.classList.remove('hidden');
-            resetCustomVerseForm();
-        }
-
-        /**
-         * Resets the custom verse form fields.
-         */
-        function resetCustomVerseForm() {
-            customBookInput.value = '';
-            customChapterInput.value = '';
-            customVerseInput.value = '';
-            customEndVerseInput.value = '';
-            customTranslationInput.value = '';
-            customVerseTextInput.value = '';
-            customVerseErrorMessage.classList.add('hidden');
-            customVerseSuccessMessage.classList.add('hidden');
-        }
-
-        // --- Event Listeners ---
-
-        // Auth View
-        loginBtn.addEventListener('click', handleLogin);
-        registerBtn.addEventListener('click', handleRegister);
-        continueLocalBtn.addEventListener('click', async () => {
-            loggedInUsername = null; // No user logged in
-            useServerStorage = false; // Explicitly set to local storage
-            await renderMainApp(); // Go to main app view
-        });
-
-        // Main App View
-        logoutBtn.addEventListener('click', handleLogout);
-        addVerseBtn.addEventListener('click', renderSaveVersePage);
-
-        // Save Verse Section
-        backToMainBtn.addEventListener('click', renderMainApp); // Go back to main app view
-
-        bookSelect.addEventListener('change', (event) => {
-            populateChapterSelect(event.target.value);
-            // Also reset verse selection and fetched display when book changes
-            verseSelect.value = '';
-            fetchedVerseDisplay.classList.add('hidden');
-            fetchErrorMessage.classList.add('hidden');
-        });
-
-        chapterSelect.addEventListener('change', () => {
-            // Reset verse selection and fetched display when chapter changes
-            verseSelect.value = '';
-            fetchedVerseDisplay.classList.add('hidden');
-            fetchErrorMessage.classList.add('hidden');
-        });
+        bookSelect.addEventListener('change', populateChapters);
 
         wholeChapterCheckbox.addEventListener('change', () => {
-            verseSelect.disabled = wholeChapterCheckbox.checked;
-            verseSelect.value = ''; // Clear verse selection if whole chapter is checked
-            fetchedVerseDisplay.classList.add('hidden'); // Hide fetched display
-            fetchErrorMessage.classList.add('hidden'); // Hide errors
+            verseInput.disabled = wholeChapterCheckbox.checked;
+            verseInput.value = '';
         });
 
-        fetchVerseBtn.addEventListener('click', fetchBibleVerse);
+        // --- Fetch Verse from KJV.txt Data ---
+        fetchVerseBtn.addEventListener('click', () => {
+            const bookAbbr = bookSelect.value;
+            const chapterNum = parseInt(chapterSelect.value);
+            const verseNum = parseInt(verseInput.value);
+            const isWholeChapter = wholeChapterCheckbox.checked;
 
-        saveFetchedVerseBtn.addEventListener('click', () => {
-            const verseRef = fetchedVerseDisplay.dataset.verseRef;
-            const verseText = fetchedVerseDisplay.dataset.verseText;
+            if (!bookAbbr || isNaN(chapterNum)) {
+                showMessageBox('Missing Information', 'Please select a Book and a Chapter.');
+                return;
+            }
 
-            if (verseRef && verseText) {
-                const newVerse = {
-                    id: generateUUID(),
-                    reference: verseRef,
-                    text: verseText
-                };
-                saveVerse(newVerse); // Use the unified saveVerse function
-                // After saving, optionally navigate back to main or clear form
-                resetFetchVerseForm();
-                fetchedVerseDisplay.classList.add('hidden'); // Ensure it hides after saving
+            let verseText = '';
+            let reference = `${bookAbbr} ${chapterNum}`;
+
+            const bookData = parsedBibleData[bookAbbr];
+            if (!bookData || !bookData[chapterNum]) {
+                showMessageBox('Verse Not Found', 'Could not find the specified book or chapter.');
+                fetchedVerseDisplay.classList.add('hidden');
+                return;
+            }
+
+            if (isWholeChapter) {
+                const chapterVerses = bookData[chapterNum];
+                const sortedVerseNumbers = Object.keys(chapterVerses).map(Number).sort((a, b) => a - b);
+                if (sortedVerseNumbers.length === 0) {
+                     showMessageBox('Verse Not Found', 'No verses found for the selected chapter.');
+                     fetchedVerseDisplay.classList.add('hidden');
+                     return;
+                }
+                verseText = sortedVerseNumbers.map(vNum => `${vNum}. ${chapterVerses[vNum]}`).join(' ');
+            } else if (!isNaN(verseNum)) {
+                verseText = bookData[chapterNum][verseNum];
+                reference += `:${verseNum}`;
             } else {
-                showMessageBox('No verse fetched to save. Please fetch a verse first.');
+                showMessageBox('Missing Information', 'Please enter a Verse number or check "Whole Chapter".');
+                fetchedVerseDisplay.classList.add('hidden');
+                return;
+            }
+
+            if (verseText) {
+                fetchedVerseRef.textContent = reference;
+                fetchedVerseText.textContent = verseText.trim();
+                fetchedVerseDisplay.classList.remove('hidden');
+            } else {
+                showMessageBox('Verse Not Found', 'Could not find the specified verse(s) in the loaded KJV text.');
+                fetchedVerseDisplay.classList.add('hidden');
             }
         });
 
-        // Custom Verse Section
-        saveCustomVerseBtn.addEventListener('click', saveCustomVerse);
+        // --- Save Fetched Verse to Firestore ---
+        saveFetchedVerseBtn.addEventListener('click', async () => {
+            if (!currentUser) {
+                showMessageBox('Login Required', 'Please log in to save verses.');
+                return;
+            }
+            if (!fetchedVerseRef.textContent || !fetchedVerseText.textContent) {
+                showMessageBox('No Verse to Save', 'Please fetch a verse first.');
+                return;
+            }
 
-        // --- Initialization ---
+            const book = bookSelect.value;
+            const chapter = chapterSelect.value;
+            const verseNumbers = wholeChapterCheckbox.checked ? 'Whole Chapter' : verseInput.value;
+            const text = fetchedVerseText.textContent;
+            const reference = fetchedVerseRef.textContent;
+
+            showLoading();
+            try {
+                const versesCollectionRef = collection(db, `artifacts/${appId}/users/${currentUser.uid}/verses`);
+                await addDoc(versesCollectionRef, {
+                    book: book,
+                    chapter: chapter,
+                    verseNumbers: verseNumbers,
+                    text: text,
+                    reference: reference,
+                    source: `KJV.txt (Local)`,
+                    timestamp: serverTimestamp() // Firebase server timestamp
+                });
+                showMessageBox('Success', 'Verse saved successfully!');
+                fetchedVerseDisplay.classList.add('hidden');
+                fetchedVerseRef.textContent = '';
+                fetchedVerseText.textContent = '';
+                addVerseView.classList.add('hidden');
+                mainView.classList.remove('hidden');
+            } catch (error) {
+                console.error('Error saving fetched verse:', error);
+                showMessageBox('Save Error', `Failed to save verse: ${error.message}`);
+            } finally {
+                hideLoading();
+            }
+        });
+
+        // --- Save Custom Verse to Firestore ---
+        saveCustomVerseBtn.addEventListener('click', async () => {
+            if (!currentUser) {
+                showMessageBox('Login Required', 'Please log in to save verses.');
+                return;
+            }
+            const book = customBookInput.value.trim();
+            const chapter = customChapterInput.value.trim();
+            const verseNumbers = customVerseNumbersInput.value.trim();
+            const text = customVerseTextArea.value.trim();
+
+            if (!book || !chapter || !text) {
+                showMessageBox('Missing Information', 'Please fill in all required fields for your custom verse (Book, Chapter, Text).');
+                return;
+            }
+
+            showLoading();
+            try {
+                const versesCollectionRef = collection(db, `artifacts/${appId}/users/${currentUser.uid}/verses`);
+                await addDoc(versesCollectionRef, {
+                    book: book,
+                    chapter: chapter,
+                    verseNumbers: verseNumbers || 'Custom',
+                    text: text,
+                    reference: `${book} ${chapter}${verseNumbers ? ':' + verseNumbers : ''}`,
+                    source: 'Custom',
+                    timestamp: serverTimestamp() // Firebase server timestamp
+                });
+                showMessageBox('Success', 'Custom verse saved successfully!');
+                customBookInput.value = '';
+                customChapterInput.value = '';
+                customVerseNumbersInput.value = '';
+                customVerseTextArea.value = '';
+                addVerseView.classList.add('hidden');
+                mainView.classList.remove('hidden');
+            } catch (error) {
+                console.error('Error saving custom verse:', error);
+                showMessageBox('Save Error', `Failed to save custom verse: ${error.message}`);
+            } finally {
+                hideLoading();
+            }
+        });
+
+        // --- Initial Load ---
         window.onload = () => {
-            // Initial render: show the authentication view
-            showView(authView);
-            populateBookSelect();
-            populateChapterSelect(bookSelect.value);
-            populateVerseSelect(); // Populate verse dropdown for initial selection
-            // Verses will be loaded once user logs in or chooses local storage.
+            loadKjvText(); // Load the KJV text file and populate books
+            // onAuthStateChanged will handle displaying the correct view
         };
     </script>
 </body>
